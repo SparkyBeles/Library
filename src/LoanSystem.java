@@ -1,16 +1,20 @@
 public class LoanSystem {
-    String available;
-    String not_available;
-    String reserved;
-    String not_reserved;
+    private boolean available;
+    private boolean not_available;
 
 
-    public LoanSystem(String available,String not_available,String reserved,String not_reserved){
-        this.available = available;
-        this.not_available = not_available;
-        this.reserved = reserved;
-        this.not_reserved = not_reserved;
+
+    public LoanSystem() {
+        this.available = true;
+    }
+
+    public boolean isNot_available() {
+        return not_available;
 
     }
 
+
+    public void setNot_available(boolean not_available) {
+        this.not_available = not_available;
+    }
 }

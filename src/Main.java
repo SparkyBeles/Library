@@ -16,13 +16,37 @@ public class Main {
 
 
 
-        System.out.println("Vilken bok vill du låna?");
-        for (int i = 0;i < bok_list.size();i++){
-            System.out.println((i+1)+"."+bok_list.get(i));
-        }
-        String book_user_want = sc.nextLine();
+       while (true){
+           System.out.println("Vilken bok vill du låna? (1/2/3 tryck (0) för att avsluta): " + bok_list);
+           int val = sc.nextInt();
+           if (val == 0){
+               break;
+           }
+           switch (val){
+               case 1:
+                   System.out.println("Du valde att låna bok 1 " + bok_list.get(0));
+                   break;
 
-        System.out.println("Du valde att låna" + book_user_want);
+               case 2:
+                   System.out.println("DU valde att låna bok 2 " + bok_list.get(1));
+                   break;
+
+               case 3:
+                   System.out.println("Du valde att låna bok 3 " + bok_list.get(2));
+                   break;
+
+               default:
+                   System.out.println("Ogiltigt val välje igen eller tryck 0 för att avsluta !!!");
+
+
+           }
+
+
+       }
+
+
+
+
 
 
         }
