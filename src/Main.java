@@ -7,91 +7,106 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
+        // List for books
+        ArrayList<Book> bookLoanedList = new ArrayList<>();
+
+        ArrayList<Book> bookList = new ArrayList<>();
+        bookList.add(new Book("The life of Jessy", "Jessy", "20217"));
+        bookList.add(new Book("Java for Dummies", "Dummies", "2020"));
+        bookList.add(new Book("I am ZLATAN", "ZLATAN", "2025"));
 
 
+        // Loop for user input and decision-making of books
+        while (true){
+            System.out.println("vad vill du göra! 1:Låna  2:Lämna  0:Avsluta ");
+            for (int i = 0; i <bookList.size() ; i++) {
+                System.out.println((i + 1) + ": " + bookList.get(i));
+            }
 
-        //List for books
-        ArrayList<Book>book_loaned_list = new ArrayList<>();
+            int choice;
 
-        ArrayList<Book> book_list = new ArrayList<>();
-        book_list.add(new Book("The life of Jessy ", " Jessy "," 20217"));
-        book_list.add(new Book("Java for dummies "," Dummies "," 2020"));
-        book_list.add(new Book("I am ZLATAN "," ZLATAN "," 2025"));
+            //keeps looping with the condition 0 to break it!
+            try {
+                choice = sc.nextInt();
+                if (choice == 0){
+                    break;
+                }
 
-
-
-
-        //Loop for user input and decision-making of books
-       while (true){
-           System.out.println("Vilken bok vill du låna? (1/2/3 tryck (0) för att avsluta): " + book_list);
-
-           //Users choice of book with condition to break the loop with 0
-           try{
-           int choice = sc.nextInt();
-           if (choice == 0){
-               break;
-           }
-           if (choice >0 && choice <= book_list.size()){
-               Book seleckted_book = book_list.get(choice -1);
-               book_list.remove(seleckted_book);
-
-           }else {
-               System.out.println("boken är redan lånad välj ett annat bok eler tryck 0 för att avsluta");
-           }
-           switch (choice) {
-               case 1:
-                   if (book_list.size() >= 1){
-                       Book selectedBook1 = book_list.get(0);
-                       book_list.remove(selectedBook1);
-                       System.out.println("Du valde att låna boken " + selectedBook1);
-
-                   }else{
-                       System.out.println("Bok 1 är redan lånad!!");
-                   }
-                   break;
-
-               case 2:
-                   if (book_list.size()>= 2){
-                       Book bookSelected2 = book_list.get(1);
-                       book_list.remove(1);
-                       book_loaned_list.add(bookSelected2);
-                       System.out.println("Du valde att låna bok 2 " + bookSelected2);
-                   }else {
-                       System.out.println("Bok 2 är redan lånad!!");
-                   }
-                   break;
-
-               case 3:
-                   if (book_list.size() >= 3){
-                       Book selectedBook3 = book_list.get(2);
-                       book_list.remove(selectedBook3);
-                       book_loaned_list.add(selectedBook3);
-                   }else {
-                       System.out.println("Bok 3 är redan lånad!!");
-                   }
-                   break;
-
-               default:
-                   System.out.println("Ogiltigt val välje igen eller tryck 0 för att avsluta !!!");
-
-           }
+                if (choice < 1 || choice > bookList.size()){
+                System.out.println("Utanför lista, försök igen! ");
+                continue;
+                }
 
 
-           //catch miss typed user input that is not number
-       } catch (InputMismatchException e){
-           System.out.println("Enbart sifror som val 1/2/3 eller 0 för att avsluta");
-           sc.next();
-           }
-       }
+                if (choice == 1){
+                    loanBook(sc, bookLoanedList, bookList);
+                }
+                else if (choice == 2){
+                    returnBook(sc, bookLoanedList, bookList);
+                }
 
-
-
-
-
-
-
+                }catch (InputMismatchException e){
+                System.out.println("Ogilitig val försök igen eller 0 för avsluta!");
+                sc.nextLine();
+            }
 
         }
 
 
-   }
+
+
+    }
+
+    private static void loanBook(Scanner sc, ArrayList<Book> bookList, ArrayList<Book> bookLoanedList) {
+        System.out.println("Vilken bok vill du låna? 0 för att avsluta! ");
+        for (int i = 0; i < bookList.size(); i++) {
+            System.out.println((i + 1) + ": " + bookList.get(i));
+
+            int choice = sc.nextInt();
+            if (choice == 0){
+                return;
+            }
+            if (choice == 1){
+                bookLoanedList.add(bookList.get(choice));
+                bookList.remove(choice);
+                System.out.println("Bok "+ choice + "har du lånat");
+            }
+
+
+        }
+
+       }
+
+
+       private static void returnBook(Scanner sc, ArrayList<Book> bookList, ArrayList<Book> bookLoanedList) {
+           System.out.println("Vilken bok vill du lämna? 0 för att avsluta! ");
+           for (int i = 0; i < bookLoanedList.size(); i++) {
+               System.out.println((i + 1) + ": " + bookLoanedList.get(i));
+
+
+
+            try {
+                int choice = sc.nextInt();
+                if (choice == 0){
+                    return;
+                }
+                if (choice > 0 || choice <= bookLoanedList.size()){
+                    System.out.println("Ogiligitg val!!");
+                }
+                if (choice == 1){
+                    bookLoanedList.remove(choice);
+                    bookList.add(bookLoanedList.get(choice));
+                    System.out.println("Du har lämnat boken " + choice);
+                }
+                if (choice == 2){
+                    return;
+                }
+
+            }catch (InputMismatchException e){
+                System.out.println("Fel input försök igen eller 0");
+            }
+
+           }
+
+    }
+}
